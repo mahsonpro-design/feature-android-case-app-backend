@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Albayda Court</string>
+    <string name="login">Sign in</string>
+    <string name="register">Create account</string>
+    <string name="full_name">Full name</string>
+    <string name="phone">Phone number</string>
+    <string name="password">Password</string>
+    <string name="loading">Working…</string>
+    <string name="home">Home</string>
+    <string name="search">Advanced search</string>
+    <string name="sessions">Daily hearings</string>
+    <string name="admin">Administration</string>
+    <string name="users">User management</string>
+    <string name="reports">Statistics</string>
+    <string name="activity">Activity log</string>
+    <string name="back">Back</string>
+    <string name="logout">Sign out</string>
+    <string name="query">Case number or party name</string>
+    <string name="case_type">Case type (all for any)</string>
+    <string name="judge">Judge (all for any)</string>
+    <string name="from_date">From date YYYY-MM-DD</string>
+    <string name="to_date">To date YYYY-MM-DD</string>
+    <string name="case_number">Case number for PDF</string>
+    <string name="pdf">Download PDF</string>
+    <string name="approve">Approve</string>
+    <string name="deactivate">Deactivate</string>
+    <string name="load">Load</string>
+    <string name="open_pdf">Open case PDF</string>
+</resources>
