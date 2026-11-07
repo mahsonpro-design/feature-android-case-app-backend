@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">محكمة البيضاء</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="register">إنشاء حساب</string>
+    <string name="full_name">الاسم الكامل</string>
+    <string name="phone">رقم الجوال</string>
+    <string name="password">كلمة المرور</string>
+    <string name="loading">جارٍ التنفيذ…</string>
+    <string name="home">الرئيسية</string>
+    <string name="search">البحث المتقدم</string>
+    <string name="sessions">الجلسات اليومية</string>
+    <string name="admin">إدارة النظام</string>
+    <string name="users">إدارة المستخدمين</string>
+    <string name="reports">الإحصاءات</string>
+    <string name="activity">سجل النشاط</string>
+    <string name="back">عودة</string>
+    <string name="logout">تسجيل الخروج</string>
+    <string name="query">رقم القضية أو اسم الطرف</string>
+    <string name="case_type">نوع القضية (all للجميع)</string>
+    <string name="judge">القاضي (all للجميع)</string>
+    <string name="from_date">من تاريخ YYYY-MM-DD</string>
+    <string name="to_date">إلى تاريخ YYYY-MM-DD</string>
+    <string name="case_number">رقم القضية لملف PDF</string>
+    <string name="pdf">تنزيل PDF</string>
+    <string name="approve">اعتماد</string>
+    <string name="deactivate">إيقاف</string>
+    <string name="load">تحميل</string>
+    <string name="open_pdf">فتح ملف القضية</string>
+</resources>
