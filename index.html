@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم وواجهة البوت الذكي</title>
+    <style>
+        :root {
+            --primary-color: #2481cc;
+            --bg-color: #f4f6f9;
+            --chat-bg: #ffffff;
+            --text-color: #333333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .window-container {
+            width: 450px;
+            height: 600px;
+            background: var(--chat-bg);
+            border-radius: 20px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .chat-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #4ebd4e;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background-image: url('https://githubusercontent.com'); /* خلفية نمط تلغرام الشهير */
+            background-size: contain;
+        }
+        .msg {
+            padding: 10px 16px;
+            border-radius: 14px;
+            max-width: 75%;
+            font-size: 15px;
+            line-height: 1.4;
+            word-wrap: break-word;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .msg.bot {
+            background-color: #ffffff;
+            color: var(--text-color);
+            align-self: flex-start;
+            border-top-right-radius: 2px;
+        }
+        .msg.user {
+            background-color: #effdde;
+            color: var(--text-color);
+            align-self: flex-end;
+            border-top-left-radius: 2px;
+        }
+        .chat-input-area {
+            padding: 15px;
+            background: #f0f2f5;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .chat-input-area input {
+            flex: 1;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 25px;
+            outline: none;
+            font-size: 15px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .chat-input-area button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .chat-input-area button:hover {
+            background-color: #1c6fa3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="window-container">
+    <div class="chat-header">
+        <span class="status-dot"></span>
+        <span>مساعد الويب الذكي (بديل التلغرام)</span>
+    </div>
+    
+    <div class="chat-messages" id="chatContainer">
+        <div class="msg bot">مرحباً بك! أنا نظام البوت الخاص بك ولكن عبر الويب مباشرة. كيف يمكنني مساعدتك الآن؟</div>
+    </div>
+
+    <div class="chat-input-area">
+        <input type="text" id="msgInput" placeholder="اكتب رسالتك هنا..." onkeypress="handleKeyPress(event)">
+        <button onclick="sendToBackend()">إرسال</button>
+    </div>
+</div>
+
+<script>
+    // الرابط المحلي الافتراضي لتشغيل ملف api.py الخاص بك
+    const BACKEND_URL = "http://127.0.0"; 
+
+    function handleKeyPress(event) {
+        if (event.key === "Enter") {
+            sendToBackend();
+        }
+    }
+
+    async function sendToBackend() {
+        const input = document.getElementById("msgInput");
+        const text = input.value.trim();
+        if (!text) return;
+
+        const container = document.getElementById("chatContainer");
+
+        // 1. عرض رسالة المستخدم في الموقع
+        container.innerHTML += `<div class="msg user">${text}</div>`;
+        input.value = "";
+        container.scrollTop = container.scrollHeight;
+
+        try {
+            // 2. إرسال النص إلى السيرفر الخاص بك المستضاف من ملف api.py
+            const response = await fetch(BACKEND_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ message: text }) // تأكد من مطابقة اسم الحقل مع السكيما في ملف api.py الخاص بك
+            });
+
+            const data = await response.json();
+
+            // 3. عرض الرد القادم من البوت
+            // ملاحظة: استبدل data.reply بالمتغير الفعلي للرد المستلم من كود بايثون لديك
+            const botReply = data.reply || data.response || "تم استلام رسالتك بنجاح من السيرفر!";
+            container.innerHTML += `<div class="msg bot">${botReply}</div>`;
+            container.scrollTop = container.scrollHeight;
+
+        } catch (error) {
+            console.error("Error connecting to backend:", error);
+            container.innerHTML += `<div class="msg bot" style="color: #d9534f; background-color: #fdf7f7;">⚠️ عذراً، لم أتمكن من الاتصال بملف السيرفر (api.py). تأكد من تشغيله محلياً.</div>`;
+            container.scrollTop = container.scrollHeight;
+        }
+    }
+</script>
+
+</body>
+</html>
