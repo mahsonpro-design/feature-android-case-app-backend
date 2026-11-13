@@ -18,7 +18,7 @@ def create_android_project():
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.1.1'
+        classpath 'com.android.tools.build:gradle:8.3.2'
     }
 }
 allprojects {
